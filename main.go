@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"startup_be/Handler"
 	"startup_be/Users"
 
 	"github.com/gin-gonic/gin"
@@ -19,23 +20,19 @@ func main() {
 	}
 
 	router := gin.Default()
-	router.GET("/testConnecttoDb", testConnectToDb)
+	apiV1 := router.Group("api/v1")
 
-	// testRepository := Test.NewRepositoryTest(db)
-	// var users []Users.User
-	// router.GET("/testConnecttoDb", testRepository.Get(users))
-	// router.Run()
+	//TEST CONNECTION TO DB
+	apiV1.GET("/testConect", testConnectToDb)
+	//END CONNECTION TO DB
 
+	//REGISTER USER API
 	userRepository := Users.NewRepository(db)
 	userService := Users.NewService(userRepository)
+	userHandler := Handler.NewUserHandler(userService)
 
-	userInput := Users.RegisterUserInput{}
-	userInput.Name = "TEST SIMPAN DATA"
-	userInput.Email = "TEST@MAIL.co.id"
-	userInput.OccupationId = 1
-	userInput.Password = "password"
-
-	userService.RegisterUser(userInput)
+	apiV1.POST("/users", userHandler.RegisterUser) //Register User
+	//END REGISTER USER API
 
 	router.Run()
 }
