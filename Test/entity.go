@@ -1,4 +1,4 @@
-package Users
+package Test
 
 import "time"
 
@@ -7,7 +7,7 @@ type User struct {
 	Name           string
 	OccupationId   int
 	Email          string
-	Password       string
+	password       string
 	AvatarFileName string
 	RoleId         int
 	CreatedAt      time.Time
