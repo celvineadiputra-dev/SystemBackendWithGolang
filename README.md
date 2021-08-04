@@ -43,6 +43,9 @@ go get -u gorm.io/driver/mysql
 ```
 go get github.com/Sirupsen/logrus
 ```
+```
+go get github.com/speps/go-hashids/v2
+```
 
 6. Masih di terminal dan di dalam folder project
 ```
