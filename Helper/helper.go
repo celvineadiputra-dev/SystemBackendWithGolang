@@ -1,6 +1,11 @@
 package Helper
 
-import "github.com/go-playground/validator/v10"
+import (
+	"github.com/go-playground/validator/v10"
+	"github.com/speps/go-hashids/v2"
+)
+
+var Salt string = "S4LT_C0D3_TH1NGK1"
 
 type Response struct {
 	Meta Meta        `json:"meta"`
@@ -36,4 +41,24 @@ func FormatValidationError(err error) []string {
 	}
 
 	return errors
+}
+
+func HashIdEncode(code int) string {
+	hd := hashids.NewData()
+	hd.Salt = Salt
+	hd.MinLength = 30
+	h, _ := hashids.NewWithData(hd)
+
+	id, _ := h.Encode([]int{code})
+
+	return id
+}
+
+func HashIdDecode(code string) int {
+	hd := hashids.NewData()
+	hd.Salt = Salt
+	hd.MinLength = 30
+	h, _ := hashids.NewWithData(hd)
+	d, _ := h.DecodeWithError(code)
+	return d[0]
 }

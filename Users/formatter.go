@@ -1,7 +1,11 @@
 package Users
 
+import (
+	"startup_be/Helper"
+)
+
 type UserFormatter struct {
-	ID         int    `json:"id"`
+	ID         string `json:"id"`
 	Name       string `json:"name"`
 	Occupation int    `json:"occupation"`
 	Email      string `json:"email"`
@@ -10,7 +14,7 @@ type UserFormatter struct {
 
 func FormatUser(User User, token string) UserFormatter {
 	formatter := UserFormatter{
-		ID:         User.ID,
+		ID:         Helper.HashIdEncode(User.ID),
 		Name:       User.Name,
 		Occupation: User.OccupationId,
 		Email:      User.Email,
