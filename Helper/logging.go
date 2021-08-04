@@ -11,13 +11,11 @@ type CreateLogging struct {
 	Message  string
 	FileName string
 	TypeLog  string
-	code     int
-	data     interface{}
 }
 
 type CreateLoggingOption func(*CreateLogging)
 
-func NewCreateLogging(message string, fileName string, typeLog string, code int, data interface{}) bool {
+func NewCreateLogging(message string, fileName string, typeLog string) bool {
 	var log = logrus.New()
 
 	log.Out = os.Stdout
@@ -32,7 +30,7 @@ func NewCreateLogging(message string, fileName string, typeLog string, code int,
 	info := "DATE : [" + time.Now().Format("01-02-2006 15:04:05 Monday") + "], Message : [" + message + "]"
 
 	if typeLog == "Info" {
-		log.Info(info, data)
+		log.Info(info)
 	}
 
 	return true
