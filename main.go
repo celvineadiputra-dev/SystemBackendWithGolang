@@ -4,7 +4,9 @@ import (
 	"log"
 	"net/http"
 	"startup_be/Handler"
+	"startup_be/Helper"
 	"startup_be/Users"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
@@ -47,6 +49,8 @@ func testConnectToDb(c *gin.Context) {
 
 	var users []Users.User
 	db.Find(&users)
+
+	Helper.NewCreateLogging("Test Connection to DB is Success", "log_testConnection_"+time.Now().Format("01-02-2006")+".log", "Info", 200, users)
 
 	c.JSON(http.StatusOK, users)
 }

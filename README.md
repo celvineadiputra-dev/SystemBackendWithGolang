@@ -40,6 +40,9 @@ go get -u github.com/gin-gonic/gin
 ```
 go get -u gorm.io/driver/mysql
 ```
+```
+go get github.com/Sirupsen/logrus
+```
 
 6. Masih di terminal dan di dalam folder project
 ```
