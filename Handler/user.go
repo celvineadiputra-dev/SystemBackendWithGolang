@@ -24,11 +24,14 @@ func (h *userHandler) RegisterUser(c *gin.Context) {
 	err := c.ShouldBindJSON(&input)
 
 	if err != nil {
-		message := fmt.Sprint("Register Account Failed : ", err.Error())
+		errors := Helper.FormatValidationError(err)
+		errorMessage := gin.H{"erros": errors}
+
+		message := fmt.Sprint("Register Account Failed : ", errorMessage)
 		Helper.NewCreateLogging(message, "log_RegisterUser_"+time.Now().Format("01-02-2006")+".log", "Error")
 
-		response := Helper.APIResponse("Register Account Failed", http.StatusBadRequest, "Error", nil)
-		c.JSON(http.StatusBadRequest, response)
+		response := Helper.APIResponse("Register Account Failed", http.StatusUnprocessableEntity, "Error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
 		return
 	}
 
