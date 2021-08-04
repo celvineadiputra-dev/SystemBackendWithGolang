@@ -31,6 +31,8 @@ func NewCreateLogging(message string, fileName string, typeLog string) bool {
 
 	if typeLog == "Info" {
 		log.Info(info)
+	} else if typeLog == "Error" {
+		log.Error(info)
 	}
 
 	return true
