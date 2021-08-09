@@ -37,10 +37,11 @@ func (h *userHandler) RegisterUser(c *gin.Context) {
 
 	newUser, err := h.userService.RegisterUser(input)
 	if err != nil {
-		message := fmt.Sprint("Register Account Failed : ", err.Error())
+		response := Helper.APIResponse("Register Account Failed", http.StatusBadRequest, "Error", err.Error())
+
+		message := fmt.Sprint("Register Account Failed : ", response)
 		Helper.NewCreateLogging(message, "log_RegisterUser_"+time.Now().Format("01-02-2006")+".log", "Error")
 
-		response := Helper.APIResponse("Register Account Failed", http.StatusBadRequest, "Error", nil)
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
@@ -50,6 +51,44 @@ func (h *userHandler) RegisterUser(c *gin.Context) {
 
 	message := fmt.Sprint("Response Register User : ", response)
 	Helper.NewCreateLogging(message, "log_RegisterUser_"+time.Now().Format("01-02-2006")+".log", "Info")
+
+	c.JSON(http.StatusOK, response)
+}
+
+func (h *userHandler) Login(c *gin.Context){
+	var input Users.LoginUserInput
+
+	err := c.ShouldBindJSON(&input)
+
+	if err != nil{
+		errors := Helper.FormatValidationError(err)
+		errorMessage := gin.H{"errors" : errors}
+
+		message := fmt.Sprint("Login User Failed : ", errorMessage)
+		Helper.NewCreateLogging(message, "log_LoginUser_"+time.Now().Format("01-02-2006")+".log", "Error")
+
+		response := Helper.APIResponse("Login User Failed", http.StatusUnprocessableEntity, "Error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	loggedUser, err := h.userService.Login(input)
+	if err != nil{
+		errorMessage := gin.H{"errors" : err.Error()}
+		response := Helper.APIResponse("Login User Failed", http.StatusUnprocessableEntity, "Error", errorMessage)
+
+		message := fmt.Sprint("Login User Failed : ", response)
+		Helper.NewCreateLogging(message, "log_LoginUser_"+time.Now().Format("01-02-2006")+".log", "Error")
+
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	formatter := Users.FormatUser(loggedUser, "TOKEN")
+	response := Helper.APIResponse("Login Success", http.StatusOK, "Success", formatter)
+
+	message := fmt.Sprint("Response Register User : ", response)
+	Helper.NewCreateLogging(message, "log_LoginUser_"+time.Now().Format("01-02-2006")+".log", "Info")
 
 	c.JSON(http.StatusOK, response)
 }

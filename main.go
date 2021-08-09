@@ -28,13 +28,19 @@ func main() {
 	apiV1.GET("/testConect", testConnectToDb)
 	//END CONNECTION TO DB
 
-	//REGISTER USER API
+	// USERS
 	userRepository := Users.NewRepository(db)
 	userService := Users.NewService(userRepository)
 	userHandler := Handler.NewUserHandler(userService)
+	// END USERS
 
+	//REGISTER USER API
 	apiV1.POST("/users", userHandler.RegisterUser) //Register User
 	//END REGISTER USER API
+
+	//LOGIN USER API
+	apiV1.POST("/sessions", userHandler.Login)
+	//END LOGIN USER API
 
 	router.Run()
 }

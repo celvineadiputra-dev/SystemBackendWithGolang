@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "4b9e44f3-b5e0-42bb-86e6-4e14bf570164",
+		"_postman_id": "0ee96d77-1c57-43a4-84a3-0d47006eaf4a",
 		"name": "Startup",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -39,7 +39,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\" : \"NAMEx\",\r\n    \"email\" : \"emailx@mail.com\",\r\n    \"occupationId\" : 1,\r\n    \"password\" : \"password\"\r\n}",
+							"raw": "{\r\n    \"name\" : \"User\",\r\n    \"email\" : \"user@mail.com\",\r\n    \"occupationId\" : 1,\r\n    \"password\" : \"password\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -55,6 +55,34 @@
 								"api",
 								"v1",
 								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"user@mail.com\",\r\n    \"password\" : \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/sessions",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sessions"
 							]
 						}
 					},
