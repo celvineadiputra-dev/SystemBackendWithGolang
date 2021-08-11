@@ -87,6 +87,34 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Check Email",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"user@mail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/checkEmail",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"checkEmail"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

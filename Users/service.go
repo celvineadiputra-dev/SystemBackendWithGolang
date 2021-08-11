@@ -12,6 +12,7 @@ import (
 type Service interface {
 	RegisterUser(input RegisterUserInput) (User, error)
 	Login(input LoginUserInput) (User, error)
+	IsEmailAvailable(input EmailUserInput) (bool, error)
 }
 
 type service struct {
@@ -82,4 +83,22 @@ func (s *service) Login(input LoginUserInput) (User, error)  {
 	Helper.NewCreateLogging(messageNew, "log_LoginUser_"+time.Now().Format("01-02-2006")+".log", "Info")
 
 	return user, nil
+}
+
+func (s *service) IsEmailAvailable (input EmailUserInput) (bool, error){
+	email := input.Email
+
+	user, err := s.repository.FindByEmail(email)
+
+	if err != nil{
+		return false, err
+	}
+
+	if user.ID == 0 {
+		// if email is not registered
+		return true, nil
+	}
+
+	//if email is already registered
+	return false, nil
 }

@@ -42,6 +42,10 @@ func main() {
 	apiV1.POST("/sessions", userHandler.Login)
 	//END LOGIN USER API
 
+	//CHECK EMAIL AVAILABLE
+	apiV1.POST("/checkEmail", userHandler.CheckEmailAvailability)
+	//END CHECK EMAIL AVAILABLE
+
 	router.Run()
 }
 
