@@ -46,6 +46,10 @@ func main() {
 	apiV1.POST("/checkEmail", userHandler.CheckEmailAvailability)
 	//END CHECK EMAIL AVAILABLE
 
+	//UPLOAD AVATAR
+	apiV1.POST("/avatars", userHandler.UploadAvatar)
+	//END UPLOAD AVATAR
+
 	router.Run()
 }
 
