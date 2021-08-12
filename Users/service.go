@@ -107,6 +107,8 @@ func (s *service) IsEmailAvailable (input EmailUserInput) (bool, error){
 func (s *service) SaveAvatar(ID int, FileLocation string) (User, error){
 	user, err := s.repository.FindById(ID)
 	if err != nil{
+		message := fmt.Sprint("Save User Avatar Failed : ", err.Error())
+		Helper.NewCreateLogging(message, "log_SaveAvatar_"+time.Now().Format("01-02-2006")+".log", "Error")
 		return user, err
 	}
 
@@ -114,8 +116,13 @@ func (s *service) SaveAvatar(ID int, FileLocation string) (User, error){
 
 	updatedUser, err := s.repository.Update(user)
 	if err != nil{
+		message := fmt.Sprint("Save User Avatar Failed : ", err.Error())
+		Helper.NewCreateLogging(message, "log_SaveAvatar_"+time.Now().Format("01-02-2006")+".log", "Error")
 		return user, err
 	}
+
+	messageNew := fmt.Sprint("Save User Avatar Success : ", user)
+	Helper.NewCreateLogging(messageNew, "log_SaveAvatar_"+time.Now().Format("01-02-2006")+".log", "Info")
 
 	return updatedUser, nil
 }
