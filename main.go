@@ -6,6 +6,7 @@ import (
 	"startup_be/Handler"
 	"startup_be/Helper"
 	"startup_be/Users"
+	"startup_be/auth"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -29,9 +30,10 @@ func main() {
 	//END CONNECTION TO DB
 
 	// USERS
+	authService := auth.NewService()
 	userRepository := Users.NewRepository(db)
 	userService := Users.NewService(userRepository)
-	userHandler := Handler.NewUserHandler(userService)
+	userHandler := Handler.NewUserHandler(userService, authService)
 	// END USERS
 
 	//REGISTER USER API

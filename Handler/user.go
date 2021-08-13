@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"startup_be/Helper"
 	"startup_be/Users"
+	"startup_be/auth"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -12,10 +13,11 @@ import (
 
 type userHandler struct {
 	userService Users.Service
+	authService auth.Service
 }
 
-func NewUserHandler(userService Users.Service) *userHandler {
-	return &userHandler{userService}
+func NewUserHandler(userService Users.Service, authService auth.Service) *userHandler {
+	return &userHandler{userService, authService}
 }
 
 func (h *userHandler) RegisterUser(c *gin.Context) {
@@ -46,7 +48,14 @@ func (h *userHandler) RegisterUser(c *gin.Context) {
 		return
 	}
 
-	formatter := Users.FormatUser(newUser, "TOKEN")
+	token, err := h.authService.GenerateToken(newUser.ID)
+	if err != nil{
+		response := Helper.APIResponse("Register Account Failed", http.StatusBadRequest, "Error", err.Error())
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	formatter := Users.FormatUser(newUser, token)
 	response := Helper.APIResponse("Account has been registered", http.StatusOK, "Success", formatter)
 
 	message := fmt.Sprint("Response Register User : ", response)
@@ -84,7 +93,14 @@ func (h *userHandler) Login(c *gin.Context){
 		return
 	}
 
-	formatter := Users.FormatUser(loggedUser, "TOKEN")
+	token, err := h.authService.GenerateToken(loggedUser.ID)
+	if err != nil{
+		response := Helper.APIResponse("Login Account Failed", http.StatusBadRequest, "Error", err.Error())
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	formatter := Users.FormatUser(loggedUser, token)
 	response := Helper.APIResponse("Login Success", http.StatusOK, "Success", formatter)
 
 	message := fmt.Sprint("Response Register User : ", response)
