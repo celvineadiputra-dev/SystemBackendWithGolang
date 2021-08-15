@@ -1,0 +1,31 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "API Version 1",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Base URL dari API di lokal (tahap development)"
+    }
+  ],
+  "paths": {
+    "/api/v1/testConect" : {
+      "get": {
+        "tags" : [
+          "Test connection to database"
+        ],
+        "parameters": [],
+        "responses":{
+          "200" : {
+            "description": "Success"
+          },
+          "422" : {
+            "description": "Unprocessed Entity"
+          }
+        }
+      }
+    }
+  }
+}
