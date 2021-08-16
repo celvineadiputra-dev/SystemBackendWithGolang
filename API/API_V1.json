@@ -11,7 +11,7 @@
     }
   ],
   "paths": {
-    "/api/v1/testConect" : {
+    "/api/v1/testConnect" : {
       "get": {
         "tags" : [
           "Test connection to database"
@@ -25,6 +25,25 @@
             "description": "Unprocessed Entity"
           }
         }
+      }
+    },
+    "/api/v1/users" : {
+      "post": {
+        "tags" : [
+          "Register New User"
+        ],
+        "parameters": [
+          {
+            "in" : "body",
+            "name" : "body",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "name" : "string",
+              "email" : "string"
+            }
+          }
+        ]
       }
     }
   }
