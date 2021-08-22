@@ -145,6 +145,36 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Campaigns",
+			"item": [
+				{
+					"name": "Get Campaigns",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/campaigns?user_id=kdpRPJEV4BQxo8MkzLYjyvm5WMr790",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"campaigns"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "kdpRPJEV4BQxo8MkzLYjyvm5WMr790"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
