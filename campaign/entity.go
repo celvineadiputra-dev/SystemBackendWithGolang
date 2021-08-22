@@ -10,7 +10,7 @@ type Campaign struct {
 	ShortDescription string
 	Description      string
 	BackerCount      int
-	GoalCount        int
+	GoalAmount        int
 	CurrentAmount    int
 	Slug             string
 	CreatedAt        time.Time
