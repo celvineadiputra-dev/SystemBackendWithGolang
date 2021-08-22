@@ -40,6 +40,7 @@ func main() {
 
 	// USERS
 	authService := auth.NewService()
+
 	userRepository := Users.NewRepository(db)
 	userService := Users.NewService(userRepository)
 	userHandler := Handler.NewUserHandler(userService, authService)
@@ -47,15 +48,9 @@ func main() {
 
 	// Campaign
 	campaignRepository := campaign.NewRepository(db)
-	campaigns, err := campaignRepository.FindAll()
-	fmt.Println("DEBUG")
+	campaignService := campaign.NewService(campaignRepository)
+	campaigns, _ := campaignService.FindCampaigns(1)
 	fmt.Println(len(campaigns))
-	for _, campaigns := range campaigns{
-		fmt.Println(campaigns.Name)
-		if len(campaigns.CampaignImages) > 0{
-			fmt.Println(campaigns.CampaignImages[0].FileName)
-		}
-	}
 	// End Campaign
 
 	//REGISTER USER API
