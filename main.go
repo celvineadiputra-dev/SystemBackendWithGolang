@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
@@ -12,6 +13,7 @@ import (
 	"startup_be/Test"
 	"startup_be/Users"
 	"startup_be/auth"
+	"startup_be/campaign"
 	"strings"
 )
 
@@ -43,6 +45,18 @@ func main() {
 	userHandler := Handler.NewUserHandler(userService, authService)
 	// END USERS
 
+	// Campaign
+	campaignRepository := campaign.NewRepository(db)
+	campaigns, err := campaignRepository.FindAll()
+	fmt.Println("DEBUG")
+	fmt.Println(len(campaigns))
+	for _, campaigns := range campaigns{
+		fmt.Println(campaigns.Name)
+		if len(campaigns.CampaignImages) > 0{
+			fmt.Println(campaigns.CampaignImages[0].FileName)
+		}
+	}
+	// End Campaign
 
 	//REGISTER USER API
 	apiV1.POST("/users", userHandler.RegisterUser) //Register User
